@@ -22,3 +22,19 @@
 # Выходные данные
 # В выходной файл OUTPUT.TXT нужно вывести количество дачников, приземлившихся на свой участок.
 # Попадание на границу участка считается попаданием на участок.
+
+with open("input.txt", "r") as f:
+  n = int(f.readline())
+  count = 0
+
+  for _ in range(n):
+    x, y, x1, y1, x2, y2, x3, y3, x4, y4 = map(int, f.readline().split())
+    min_x = min(x1, x2, x3, x4)
+    max_x = max(x1, x2, x3, x4)
+    min_y = min(y1, y2, y3, y4)
+    max_y = max(y1, y2, y3, y4)
+    if min_x <= x <= max_x and min_y <= y <= max_y:
+      count += 1
+
+with open("output.txt", "w") as f:
+  f.write(str(count))
