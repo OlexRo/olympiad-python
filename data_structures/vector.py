@@ -24,6 +24,18 @@ class Vector:
   def __str__(self):
     return f"[{', '.join(str(self._array[i]) for i in range(self._size))}]"
 
+  @property
+  def size(self):
+    return self._size
+
+  @property
+  def capacity(self):
+    return self._capacity
+
+  @property
+  def is_empty(self):
+    return self._size == 0
+
   def _resize(self, new_capacity):
     new_array = [None] * new_capacity
     for i in range(self._size):
@@ -31,29 +43,28 @@ class Vector:
     self._array = new_array
     self._capacity = new_capacity
 
-  @property
-  def capacity(self):
-    return self._capacity
+  def clear(self):
+    self._array = [None] * self._capacity
+    self._size = 0
 
-  @property
-  def size(self):
-    return self._size
-
-  def is_empty(self):
-    return self._size == 0
+  def index(self, value):
+    for i in range(self._size):
+      if self._array[i] == value:
+        return i
+    raise ValueError(f"Value {value} not found")
 
   def append(self, value):
     if self._size == self._capacity:
-      self._resize(self._capacity * 2)
+      self._resize(self.capacity * 2)
     self._array[self._size] = value
     self._size += 1
 
   def insert(self, index, value):
     if index < 0 or index > self._size:
       raise IndexError("Index out of range")
-    if self._size == self._capacity:
-      self._resize(self._capacity * 2)
-    for i in range(self._size, index, -1):
+    if self.size == self.capacity:
+      self._resize(self.capacity * 2)
+    for i in range(self.size, index, -1):
       self._array[i] = self._array[i - 1]
     self._array[index] = value
     self._size += 1
@@ -71,22 +82,12 @@ class Vector:
     self._size -= 1
     self._array[self._size] = None
     if self._size > 0 and self._size <= self._capacity // 4:
-      self._resize(self._capacity // 2)
+      self._resize(self.capacity // 2)
     return value
 
-  def remove(self, value):
+  def delete(self, value):
     for i in range(self._size):
       if self._array[i] == value:
         self.pop(i)
         return
     raise ValueError(f"Value {value} not found")
-
-  def index(self, value):
-    for i in range(self._size):
-      if self._array[i] == value:
-        return i
-    raise ValueError(f"Value {value} not found")
-
-  def clear(self):
-    self._array = [None] * self._capacity
-    self._size = 0
