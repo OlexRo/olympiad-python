@@ -7,7 +7,7 @@ def bubble_sorted(arr):
       if arr[j] > arr[j + 1]:
         arr[j], arr[j + 1] = arr[j + 1], arr[j]
         swapped = True
-    print(f"Проход {step}: {arr}")
+    print(f"Проход {step}: {arr}")  # Для наглядности
     if not swapped:
       print(f"Досрочный выход на проходе {step}")
       break
